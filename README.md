@@ -1,4 +1,4 @@
-# Quiz App
+# Quiz Master
 
 ## Overview
 The *Quiz App* is a web-based application that allows users to take quizzes on various topics. It uses Flask, Jinja2, HTML, CSS, and Flask-SQLAlchemy for database management.
