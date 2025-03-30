@@ -1,65 +1,63 @@
-# Quiz Master 🎯
-A Flask-based quiz platform that allows users to take quizzes and administrators to manage them.<br>
-**
-Features**
-User & Admin Authentication<br>
+# Quiz App
 
-Quiz Creation & Management<br>
+## Overview
+The *Quiz App* is a web-based application that allows users to take quizzes on various topics. It is built using Flask, Jinja2, HTML, CSS, and Flask-SQLAlchemy for database management.
 
-Score Tracking & Performance Analysis<br>
+## Features
+- User authentication (Login/Signup)
+- Create, edit, and delete quizzes
+- Multiple-choice questions
+- Score tracking
+- Responsive design
 
-Separate Dashboards for Users & Admins<br>
+## Technologies Used
+- *Backend*: Flask, Flask-SQLAlchemy
+- *Frontend*: HTML, CSS, Jinja2
+- *Database*: SQLite
 
-**Project Structure**<br>
-bash<br>
-Copy<br>
-Edit<br>
-/backend<br>
-   ├── models.py        # Database Models<br>
-   ├── controllers.py   # Routes & Logic<br>
-/app.py                 # Main Flask App<br>
-/requirements.txt       # Dependencies<br>
-/templates              # HTML Templates<br>
-/static                # CSS, JS, Images<br>
-**Installation & Setup**
-1️⃣ Clone the Repository<br>
-bash<br>
-Copy<br>
-Edit<br>
-git clone https://github.com/your-username/quiz-master.git<br>
-cd quiz-master<br>
-2️⃣ Set Up a Virtual Environment<br>
-bash<br>
-Copy<br>
-Edit<br>
-python -m venv venv<br>
-source venv\Scripts\activate<br>
-3️⃣ Install Dependencies<br>
-bash<br>
-Copy<br>
-Edit<br>
-pip install -r requirements.txt<br>
-4️⃣ Initialize the Database
-python<br>
-Copy<br>
-Edit<br>
-python -c "from app import db; db.create_all()"<br>
-5️⃣ Run the Flask App<br>
-bash<br>
-Copy<br>
-Edit<br>
-python app.py<br>
-Access the app at http://127.0.0.1:5000 <br>
+## Installation
 
-** Default Admin Login**
-Username: admin
-<br>
-Password: admin123
-<br>
-** Tech Stack**
-Backend: Flask, SQLAlchemy<br>
+1. *Clone the Repository*
+   sh
+   git clone https://github.com/yourusername/quiz-app.git
+   cd quiz-app
+   
 
-Frontend: HTML, Bootstrap<br>
+2. *Create a Virtual Environment*
+   sh
+   python -m venv venv
+   source venv/bin/activate  # On Windows use 'venv\Scripts\activate'
+   
 
-Database: SQLite
-<br>
+3. *Install Dependencies*
+   sh
+   pip install -r requirements.txt
+   
+
+4. *Set Up the Database*
+   sh
+   flask db init
+   flask db migrate -m "Initial migration."
+   flask db upgrade
+   
+
+5. *Run the Application*
+   sh
+   flask run
+   
+   The app will be available at http://127.0.0.1:5000/
+
+## Usage
+- Register and log in.
+- Create a new quiz or take an existing one.
+- Answer multiple-choice questions and submit responses.
+- View your score and improve your knowledge.
+
+## Contributing
+Feel free to contribute by opening issues and submitting pull requests.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Author
+Developed by *Akshit Garg*.
