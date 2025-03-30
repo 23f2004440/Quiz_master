@@ -19,14 +19,14 @@ The *Quiz App* is a web-based application that allows users to take quizzes on v
 
 1. *Clone the Repository*
    sh
-   git clone 
+   git clone https://github.com/23f2004440/Quiz_master
    cd quiz-app
    
 
 2. *Create a Virtual Environment*
    sh
    python -m venv venv
-   source venv/bin/activate  # On Windows use 'venv\Scripts\activate'
+   source 'venv\Scripts\activate'
    
 
 3. *Install Dependencies*
