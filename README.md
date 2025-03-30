@@ -1,7 +1,7 @@
 # Quiz App
 
 ## Overview
-The *Quiz App* is a web-based application that allows users to take quizzes on various topics. It is built using Flask, Jinja2, HTML, CSS, and Flask-SQLAlchemy for database management.
+The *Quiz App* is a web-based application that allows users to take quizzes on various topics. It uses Flask, Jinja2, HTML, CSS, and Flask-SQLAlchemy for database management.
 
 ## Features
 - User authentication (Login/Signup)
@@ -19,7 +19,7 @@ The *Quiz App* is a web-based application that allows users to take quizzes on v
 
 1. *Clone the Repository*
    sh
-   git clone https://github.com/yourusername/quiz-app.git
+   git clone 
    cd quiz-app
    
 
@@ -49,15 +49,11 @@ The *Quiz App* is a web-based application that allows users to take quizzes on v
 
 ## Usage
 - Register and log in.
-- Create a new quiz or take an existing one.
+- Create a new quiz(admin) or take an existing one.
 - Answer multiple-choice questions and submit responses.
-- View your score and improve your knowledge.
+- View your score 
 
-## Contributing
-Feel free to contribute by opening issues and submitting pull requests.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Author
-Developed by *Akshit Garg*.
+Developed by *Ayushi*.
+
