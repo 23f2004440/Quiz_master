@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Results - Quiz Master{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('dashboard', username=session.get('username')) }}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Quiz Results</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{ score.quiz.title }} - Results</h3>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="score-summary text-center p-4 border rounded">
+                                <h4>Your Score</h4>
+                                <h1 class="display-4">{{ "%.1f"|format(score.total_scored / score.total_possible * 100) }}%</h1>
+                                <p class="lead">{{ score.total_scored }} out of {{ score.total_possible }} points</p>
+                                
+                                {% set percentage = (score.total_scored / score.total_possible * 100) %}
+                                {% if percentage >= score.quiz.passing_percentage %}
+                                    <div class="alert alert-success mt-3">
+                                        <h5>Congratulations! You passed!</h5>
+                                        <p class="mb-0">You scored above the passing mark of {{ score.quiz.passing_percentage }}%</p>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-danger mt-3">
+                                        <h5>Keep trying!</h5>
+                                        <p class="mb-0">You need {{ score.quiz.passing_percentage }}% to pass this quiz</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="quiz-details p-4 border rounded">
+                                <h4>Quiz Details</h4>
+                                <ul class="list-unstyled">
+                                    <li><strong>Subject:</strong> {{ score.quiz.chapter.subject.name }}</li>
+                                    <li><strong>Chapter:</strong> {{ score.quiz.chapter.name }}</li>
+                                    <li><strong>Duration:</strong> {{ score.quiz.duration_minutes }} minutes</li>
+                                    <li><strong>Passing Score:</strong> {{ score.quiz.passing_percentage }}%</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Detailed Results</h4>
+                </div>
+                <div class="card-body">
+                    {% for question in score.quiz.questions %}
+                        <div class="question-result mb-4 p-3 border rounded">
+                            <h5>Question {{ loop.index }}</h5>
+                            <p>{{ question.question_statement }}</p>
+                            
+                            <div class="options-list">
+                                {% set user_answer = request.form.get('question_' ~ question.id)|int %}
+                                <div class="option mb-2 {{ 'text-success fw-bold' if question.correct_option == 1 }} {{ 'text-danger' if user_answer == 1 and question.correct_option != 1 }}">
+                                    1. {{ question.option1 }} 
+                                    {% if question.correct_option == 1 %}<span class="badge bg-success">Correct Answer</span>{% endif %}
+                                    {% if user_answer == 1 %}<span class="badge bg-primary">Your Answer</span>{% endif %}
+                                </div>
+                                <div class="option mb-2 {{ 'text-success fw-bold' if question.correct_option == 2 }} {{ 'text-danger' if user_answer == 2 and question.correct_option != 2 }}">
+                                    2. {{ question.option2 }}
+                                    {% if question.correct_option == 2 %}<span class="badge bg-success">Correct Answer</span>{% endif %}
+                                    {% if user_answer == 2 %}<span class="badge bg-primary">Your Answer</span>{% endif %}
+                                </div>
+                                <div class="option mb-2 {{ 'text-success fw-bold' if question.correct_option == 3 }} {{ 'text-danger' if user_answer == 3 and question.correct_option != 3 }}">
+                                    3. {{ question.option3 }}
+                                    {% if question.correct_option == 3 %}<span class="badge bg-success">Correct Answer</span>{% endif %}
+                                    {% if user_answer == 3 %}<span class="badge bg-primary">Your Answer</span>{% endif %}
+                                </div>
+                                <div class="option mb-2 {{ 'text-success fw-bold' if question.correct_option == 4 }} {{ 'text-danger' if user_answer == 4 and question.correct_option != 4 }}">
+                                    4. {{ question.option4 }}
+                                    {% if question.correct_option == 4 %}<span class="badge bg-success">Correct Answer</span>{% endif %}
+                                    {% if user_answer == 4 %}<span class="badge bg-primary">Your Answer</span>{% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <small class="text-muted">Points: {{ question.points }}</small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4 mb-4">
+        <a href="{{ url_for('dashboard', username=session.get('username')) }}" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %} 

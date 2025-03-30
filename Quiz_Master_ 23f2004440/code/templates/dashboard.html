@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Quiz Master{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Welcome, {{ user.username }}!</h2>
+        {% if user.is_admin %}
+            <div class="alert alert-info">
+                You are logged in as an administrator.
+                <a href="{{ url_for('admin_dashboard') }}" ></a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search</h5>
+                <form class="row g-3" method="GET" action="{{ url_for('user_search') }}">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="query" placeholder="Search  subjects, or quizzes...">
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" name="type">
+                            <option value="all">All</option>
+                            
+                            <option value="subjects">Subjects</option>
+                            <option value="quizzes">Quizzes</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>Available Quizzes</h3>
+            </div>
+            <div class="card-body">
+                {% if available_quizzes %}
+                    <div class="row">
+                        {% for quiz in available_quizzes %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ quiz.title }}</h5>
+                                        <p class="text-muted mb-2">{{ quiz.chapter.subject.name }} > {{ quiz.chapter.name }}</p>
+                                        <p class="card-text">
+                                            <small class="text-muted">Duration: {{ quiz.duration_minutes }} minutes</small><br>
+                                            <small class="text-muted">Passing Score: {{ quiz.passing_percentage }}%</small>
+                                        </p>
+                                        {% if quiz.remarks %}
+                                            <p class="card-text">{{ quiz.remarks }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="{{ url_for('take_quiz', quiz_id=quiz.id) }}" class="btn btn-primary w-100">Take Quiz</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No quizzes are currently available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>Your Quiz History</h3>
+            </div>
+            <div class="card-body">
+                {% if scores %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Quiz</th>
+                                <th>Score</th>
+                                <th>Percentage</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for score in scores %}
+                                <tr>
+                                    <td>{{ score.quiz.title }}</td>
+                                    <td>{{ score.total_scored }} / {{ score.total_possible }}</td>
+                                    <td>{{ "%.2f"|format(score.total_scored / score.total_possible * 100) }}%</td>
+                                    <td>
+                                        {% set percentage = (score.total_scored / score.total_possible * 100) %}
+                                        {% if percentage >= score.quiz.passing_percentage %}
+                                            <span class="badge bg-success">Passed</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Failed</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>You haven't taken any quizzes yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit' if quiz else 'Create' }} Quiz - Quiz Master{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('list_subjects') }}">Subjects</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_subject', subject_id=chapter.subject.id) }}">{{ chapter.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_chapter', chapter_id=chapter.id) }}">{{ chapter.name }}</a></li>
+            <li class="breadcrumb-item active">{{ 'Edit' if quiz else 'Create' }} Quiz</li>
+        </ol>
+    </nav>
+
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %} -->
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ 'Edit' if quiz else 'Create New' }} Quiz</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('edit_quiz', quiz_id=quiz.id) if quiz else url_for('create_quiz', chapter_id=chapter.id) }}">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Quiz Title *</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ quiz.title if quiz else '' }}" required>
+                            <div class="form-text">Enter a descriptive title for the quiz.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="remarks" class="form-label">Remarks</label>
+                            <textarea class="form-control" id="remarks" name="remarks" rows="3">{{ quiz.remarks if quiz else '' }}</textarea>
+                            <div class="form-text">Add any additional notes or instructions for the quiz.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="duration_minutes" class="form-label">Duration (minutes) *</label>
+                            <input type="number" class="form-control" id="duration_minutes" name="duration_minutes" 
+                                   value="{{ quiz.duration_minutes if quiz else '30' }}" min="1" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="passing_percentage" class="form-label">Passing Percentage *</label>
+                            <input type="number" class="form-control" id="passing_percentage" name="passing_percentage" 
+                                   value="{{ quiz.passing_percentage if quiz else '60' }}" min="1" max="100" required>
+                            <div class="form-text">Set the minimum percentage required to pass the quiz.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="is_active" name="is_active" 
+                                       {{ 'checked' if quiz and quiz.is_active else '' }}>
+                                <label class="form-check-label" for="is_active">
+                                    Make Quiz Active
+                                </label>
+                                <div class="form-text">Only active quizzes are visible to students.</div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('view_chapter', chapter_id=chapter.id) }}" class="btn btn-secondary">Back to Chapter</a>
+                            <button type="submit" class="btn btn-primary">{{ 'Save Changes' if quiz else 'Create Quiz' }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

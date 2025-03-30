@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit' if question else 'Add' }} Question - Quiz Master{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('list_subjects') }}">Subjects</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_subject', subject_id=quiz.chapter.subject.id) }}">{{ quiz.chapter.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_chapter', chapter_id=quiz.chapter.id) }}">{{ quiz.chapter.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_quiz', quiz_id=quiz.id) }}">{{ quiz.title }}</a></li>
+            <li class="breadcrumb-item active">{{ 'Edit' if question else 'Add' }} Question</li>
+        </ol>
+    </nav>
+
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %} -->
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ 'Edit' if question else 'Add New' }} Question</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('edit_question', question_id=question.id) if question else url_for('create_question', quiz_id=quiz.id) }}">
+                        <div class="mb-3">
+                            <label for="question_statement" class="form-label">Question *</label>
+                            <textarea class="form-control" id="question_statement" name="question_statement" rows="3" required>{{ question.question_statement if question else '' }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="option1" class="form-label">Option 1 *</label>
+                            <input type="text" class="form-control" id="option1" name="option1" value="{{ question.option1 if question else '' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="option2" class="form-label">Option 2 *</label>
+                            <input type="text" class="form-control" id="option2" name="option2" value="{{ question.option2 if question else '' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="option3" class="form-label">Option 3 *</label>
+                            <input type="text" class="form-control" id="option3" name="option3" value="{{ question.option3 if question else '' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="option4" class="form-label">Option 4 *</label>
+                            <input type="text" class="form-control" id="option4" name="option4" value="{{ question.option4 if question else '' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="correct_option" class="form-label">Correct Answer *</label>
+                            <select class="form-select" id="correct_option" name="correct_option" required>
+                                <option value="">Select correct answer</option>
+                                <option value="1" {{ 'selected' if question and question.correct_option == 1 else '' }}>Option 1</option>
+                                <option value="2" {{ 'selected' if question and question.correct_option == 2 else '' }}>Option 2</option>
+                                <option value="3" {{ 'selected' if question and question.correct_option == 3 else '' }}>Option 3</option>
+                                <option value="4" {{ 'selected' if question and question.correct_option == 4 else '' }}>Option 4</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="points" class="form-label">Points</label>
+                            <input type="number" class="form-control" id="points" name="points" value="{{ question.points if question else '1.0' }}" min="0" step="0.5">
+                            <div class="form-text">Points awarded for correct answer. Default is 1.0</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('view_quiz', quiz_id=quiz.id) }}" class="btn btn-secondary">Back to Quiz</a>
+                            <button type="submit" class="btn btn-primary">{{ 'Save Changes' if question else 'Add Question' }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

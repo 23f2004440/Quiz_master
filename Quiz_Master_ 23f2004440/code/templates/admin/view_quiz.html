@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }} - Quiz Master{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('list_subjects') }}">Subjects</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_subject', subject_id=quiz.chapter.subject.id) }}">{{ quiz.chapter.subject.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('view_chapter', chapter_id=quiz.chapter.id) }}">{{ quiz.chapter.name }}</a></li>
+            <li class="breadcrumb-item active">{{ quiz.title }}</li>
+        </ol>
+    </nav>
+
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %} -->
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="card-title mb-0">{{ quiz.title }}</h3>
+                        <div>
+                            <a href="{{ url_for('edit_quiz', quiz_id=quiz.id) }}" class="btn btn-warning">Edit Quiz</a>
+                            <a href="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this quiz? This will also delete all associated questions and scores.')">Delete Quiz</a>
+                        </div>
+                    </div>
+                    <p class="text-muted">{{ quiz.remarks or 'No remarks available.' }}</p>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <p><strong>Duration:</strong> {{ quiz.duration_minutes }} minutes</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Passing Score:</strong> {{ quiz.passing_percentage }}%</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Status:</strong> 
+                                <span class="badge bg-{{ 'success' if quiz.is_active else 'secondary' }}">
+                                    {{ 'Active' if quiz.is_active else 'Inactive' }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Questions</h5>
+                        <a href="{{ url_for('create_question', quiz_id=quiz.id) }}" class="btn btn-primary">Add New Question</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if quiz.questions %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Question</th>
+                                        <th>Points</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for question in quiz.questions %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ question.question_statement|truncate(100) }}</td>
+                                            <td>{{ question.points }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="{{ url_for('view_question', question_id=question.id) }}" class="btn btn-info btn-sm">View</a>
+                                                    <a href="{{ url_for('edit_question', question_id=question.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="{{ url_for('delete_question', question_id=question.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this question?')">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No questions found. Click "Add New Question" to create one.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

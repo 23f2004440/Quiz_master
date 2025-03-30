@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results - Quiz Master{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Search Results</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>Search Results</h2>
+            <p class="text-muted">
+                Showing results for "{{ query }}"
+                {% if search_type != 'all' %}
+                    in {{ search_type }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    {% if search_type in ['all', 'users'] and results.users %}
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Users</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Quizzes Taken</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in results.users %}
+                                        <tr>
+                                            <td>{{ user.username }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.scores|length }}</td>
+                                            
+                                            
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if search_type in ['all', 'subjects'] and results.subjects %}
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Subjects</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Name</th>
+                                        <th>Description</th>
+                                        <th>Chapters</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for subject in results.subjects %}
+                                        <tr>
+                                            <td>{{ subject.name }}</td>
+                                            <td>{{ subject.description }}</td>
+                                            <td>{{ subject.chapters|length }}</td>
+                                            <td>
+                                                <a href="{{ url_for('view_subject', subject_id=subject.id) }}" class="btn btn-info btn-sm">View Details</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if search_type in ['all', 'quizzes'] and results.quizzes %}
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quizzes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Quiz Title</th>
+                                        <th>Chapter</th>
+                                        <th>Subject</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for quiz in results.quizzes %}
+                                        <tr>
+                                            <td>{{ quiz.title }}</td>
+                                            <td>{{ quiz.chapter.name }}</td>
+                                            <td>{{ quiz.chapter.subject.name }}</td>
+                                          
+                                            <td>
+                                                <a href="{{ url_for('view_quiz', quiz_id=quiz.id) }}" class="btn btn-info btn-sm">View Details</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if not results.users and not results.subjects and not results.quizzes %}
+        <div class="alert alert-info">
+            No results found for your search.
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

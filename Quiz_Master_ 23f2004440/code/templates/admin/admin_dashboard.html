@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Quiz Master{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>Welcome, Quiz Master!</h2>
+            <p class="text-muted">Manage your quiz application from here.</p>
+        </div>
+    </div>
+
+    
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Search</h5>
+                    <form class="row g-3" method="GET" action="{{ url_for('admin_search') }}">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="query" placeholder="Search users, subjects, or quizzes...">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" name="type">
+                                <option value="all">All</option>
+                                <option value="users">Users</option>
+                                <option value="subjects">Subjects</option>
+                                <option value="quizzes">Quizzes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Users</h6>
+                    <h2 class="card-text">{{ users_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Subjects</h6>
+                    <h2 class="card-text">{{ subjects|length }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Total Chapters</h6>
+                    <h2 class="card-text">{{ chapters_count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Active Quizzes</h6>
+                    <h2 class="card-text">{{ quizzes_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Subjects</h5>
+                        <a href="{{ url_for('create_subject') }}" class="btn btn-primary">Add New Subject</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if subjects %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Name</th>
+                                        <th>Chapters</th>
+                                        <th>Total Quizzes</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for subject in subjects %}
+                                        <tr>
+                                            <td>{{ subject.name }}</td>
+                                            <td>{{ subject.chapters|length }}</td>
+                                            {% set quiz_count = namespace(total=0) %}
+                                            {% for chapter in subject.chapters %}
+                                                {% set quiz_count.total = quiz_count.total + chapter.quizzes|length %}
+                                            {% endfor %}
+                                            <td>{{ quiz_count.total }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="{{ url_for('view_subject', subject_id=subject.id) }}" class="btn btn-info btn-sm">View</a>
+                                                    <a href="{{ url_for('edit_subject', subject_id=subject.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="{{ url_for('delete_subject', subject_id=subject.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this subject? This will also delete all associated chapters and quizzes.')">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No subjects found. Click "Add New Subject" to create one.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
