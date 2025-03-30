@@ -1,64 +1,65 @@
 # Quiz Master 🎯
-A Flask-based quiz platform that allows users to take quizzes and administrators to manage them.
+A Flask-based quiz platform that allows users to take quizzes and administrators to manage them.<br>
 **
-Features**
-User & Admin Authentication
+Features**<br>
+User & Admin Authentication<br>
 
-Quiz Creation & Management
+Quiz Creation & Management<br>
 
-Score Tracking & Performance Analysis
+Score Tracking & Performance Analysis<br>
 
-Separate Dashboards for Users & Admins
+Separate Dashboards for Users & Admins<br>
 
-**Project Structure**
-bash
-Copy
-Edit
-/backend
-   ├── models.py        # Database Models
-   ├── controllers.py   # Routes & Logic
-/app.py                 # Main Flask App
-/requirements.txt       # Dependencies
-/templates              # HTML Templates
-/static                # CSS, JS, Images
+**Project Structure**<br>
+bash<br>
+Copy<br>
+Edit<br>
+/backend<br>
+   ├── models.py        # Database Models<br>
+   ├── controllers.py   # Routes & Logic<br>
+/app.py                 # Main Flask App<br>
+/requirements.txt       # Dependencies<br>
+/templates              # HTML Templates<br>
+/static                # CSS, JS, Images<br>
 **Installation & Setup**
-1️⃣ Clone the Repository
-bash
-Copy
-Edit
-git clone https://github.com/your-username/quiz-master.git
-cd quiz-master
-2️⃣ Set Up a Virtual Environment
-bash
-Copy
-Edit
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-3️⃣ Install Dependencies
-bash
-Copy
-Edit
-pip install -r requirements.txt
+1️⃣ Clone the Repository<br>
+bash<br>
+Copy<br>
+Edit<br>
+git clone https://github.com/your-username/quiz-master.git<br>
+cd quiz-master<br>
+2️⃣ Set Up a Virtual Environment<br>
+bash<br>
+Copy<br>
+Edit<br>
+python -m venv venv<br>
+source venv\Scripts\activate<br>
+3️⃣ Install Dependencies<br>
+bash<br>
+Copy<br>
+Edit<br>
+pip install -r requirements.txt<br>
 4️⃣ Initialize the Database
-python
-Copy
-Edit
-python -c "from app import db; db.create_all()"
-5️⃣ Run the Flask App
-bash
-Copy
-Edit
-python app.py
-Access the app at http://127.0.0.1:5000 🌍
+python<br>
+Copy<br>
+Edit<br>
+python -c "from app import db; db.create_all()"<br>
+5️⃣ Run the Flask App<br>
+bash<br>
+Copy<br>
+Edit<br>
+python app.py<br>
+Access the app at http://127.0.0.1:5000 <br>
 
-** Default Admin Login**
+** Default Admin Login**<br>
 Username: admin
-
+<br>
 Password: admin123
+<br>
+** Tech Stack**<br>
+Backend: Flask, SQLAlchemy<br>
 
-** Tech Stack**
-Backend: Flask, SQLAlchemy
-
-Frontend: HTML, Bootstrap
+Frontend: HTML, Bootstrap<br>
 
 Database: SQLite
+<br>
