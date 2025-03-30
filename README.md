@@ -1,7 +1,7 @@
 # Quiz Master 🎯
 A Flask-based quiz platform that allows users to take quizzes and administrators to manage them.
-
-📌 Features
+**
+Features**
 User & Admin Authentication
 
 Quiz Creation & Management
@@ -10,7 +10,7 @@ Score Tracking & Performance Analysis
 
 Separate Dashboards for Users & Admins
 
-📂 Project Structure
+**Project Structure**
 bash
 Copy
 Edit
@@ -21,7 +21,7 @@ Edit
 /requirements.txt       # Dependencies
 /templates              # HTML Templates
 /static                # CSS, JS, Images
-🚀 Installation & Setup
+**Installation & Setup**
 1️⃣ Clone the Repository
 bash
 Copy
@@ -51,12 +51,12 @@ Edit
 python app.py
 Access the app at http://127.0.0.1:5000 🌍
 
-👤 Default Admin Login
+** Default Admin Login**
 Username: admin
 
 Password: admin123
 
-🛠 Tech Stack
+** Tech Stack**
 Backend: Flask, SQLAlchemy
 
 Frontend: HTML, Bootstrap
